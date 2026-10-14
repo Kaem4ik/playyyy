@@ -11,8 +11,36 @@
 <x-header />
 
 <main>
-    <h1>Журналист</h1>
-    <p>Здесь форма для статьи.</p>
+    <h1>Создать статью</h1>
+
+    @if ($errors->any())
+        <div style="color: red; margin-bottom: 15px;">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('journalist.store') }}">
+        @csrf
+
+        <p>
+            <label>Заголовок</label><br>
+            <input type="text" name="title" value="{{ old('title') }}" required style="width: 100%;">
+        </p>
+
+        <p>
+            <label>Категория</label><br>
+            <input type="text" name="category" value="{{ old('category') }}" required style="width: 100%;">
+        </p>
+
+        <p>
+            <label>Текст статьи</label><br>
+            <textarea name="content" rows="10" required style="width: 100%;">{{ old('content') }}</textarea>
+        </p>
+
+        <button type="submit">Опубликовать</button>
+    </form>
 </main>
 
 <x-footer />
